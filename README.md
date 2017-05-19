@@ -53,3 +53,24 @@ optional arguments:
 - low-rank approximation
   - with SVD (matrix)
   - with Tucker (tensor)
+
+# Examples
+In example directory, you will find model compression of VGG-like models using MNIST and CIFAR10 dataset.
+
+```console
+$ cd ./keras_compressor/example/mnist/
+
+$ python train.py
+-> outputs non-compressed model `model_raw.h5`
+
+$ python compress.py
+-> outputs compressed model `model_compressed.h5` from `model_raw.h5`
+
+$ python finetune.py
+-> outputs finetuned and compressed model `model_finetuned.h5` from `model_compressed.h5`
+
+$ python evaluate.py model_raw.h5
+$ python evaluate.py model_compressed.h5
+$ python evaluate.py model_finetuned.h5
+-> output test accuracy and the number of model parameters
+```
