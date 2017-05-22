@@ -14,7 +14,7 @@ def count_total_params(model):
     """Counts the number of parameters in a model
 
     See:
-        https://github.com/fchollet/keras/blob/master/keras/utils/layer_utils.py#L115-L118
+        https://github.com/fchollet/keras/blob/172397ebf45d58ba256c10004c6fce8b40df286b/keras/utils/layer_utils.py#L114-L117
 
     :param model: Keras model instance
     :return: trainable_count, non_trainable_count
