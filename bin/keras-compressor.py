@@ -3,10 +3,28 @@ import argparse
 import logging
 
 import keras
+import keras.backend as K
+import numpy
 from keras.models import load_model
-from keras.utils.layer_utils import count_total_params
 
 from keras_compressor.compressor import compress
+
+
+def count_total_params(model):
+    """Counts the number of parameters in a model
+
+    See:
+        https://github.com/fchollet/keras/blob/172397ebf45d58ba256c10004c6fce8b40df286b/keras/utils/layer_utils.py#L114-L117
+
+    :param model: Keras model instance
+    :return: trainable_count, non_trainable_count
+    :rtype: tuple of int
+    """
+    trainable_count = int(
+        numpy.sum([K.count_params(p) for p in set(model.trainable_weights)]))
+    non_trainable_count = int(
+        numpy.sum([K.count_params(p) for p in set(model.non_trainable_weights)]))
+    return trainable_count, non_trainable_count
 
 
 def gen_argparser():
