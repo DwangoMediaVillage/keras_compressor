@@ -51,9 +51,9 @@ def main():
     logging.basicConfig(level=getattr(logging, args.log_level))
 
     model = load_model(args.model)  # type: keras.models.Model
-    total_params_before = sum(count_total_params(model.layers))
+    total_params_before = sum(count_total_params(model))
     model = compress(model, acceptable_error=args.error)
-    total_params_after = sum(count_total_params(model.layers))
+    total_params_after = sum(count_total_params(model))
     model.save(args.compressed)
     print('\n'.join((
         'Compressed model',
