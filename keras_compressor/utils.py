@@ -20,7 +20,7 @@ def swap_layer_connection(old_layer: Layer, new_layer: Layer) -> None:
     inbound_layers = set()
 
     # create new inbound nodes
-    for node in old_layer.inbound_nodes:  # type: Node
+    for node in old_layer._inbound_nodes:  # type: Node
         Node(
             new_layer, node.inbound_layers,
             node.node_indices, node.tensor_indices,
@@ -34,15 +34,15 @@ def swap_layer_connection(old_layer: Layer, new_layer: Layer) -> None:
     for layer in inbound_layers:  # type: Layer
         old_nodes = filter(
             lambda n: n.outbound_layer == old_layer,
-            layer.outbound_nodes,
+            layer._outbound_nodes,
         )
         for n in old_nodes:  # type: Node
-            layer.outbound_nodes.remove(n)
+            layer._outbound_nodes.remove(n)
 
     # the set of outbound layer which have old inbound_nodes
     outbound_layers = set()
     # create new outbound nodes
-    for node in old_layer.outbound_nodes:  # type: Node
+    for node in old_layer._outbound_nodes:  # type: Node
         layers = list(node.inbound_layers)
         while old_layer in layers:
             idx = layers.index(old_layer)
@@ -60,10 +60,10 @@ def swap_layer_connection(old_layer: Layer, new_layer: Layer) -> None:
     for layer in outbound_layers:  # type: Layer
         old_nodes = filter(
             lambda n: old_layer in n.inbound_layers,
-            layer.inbound_nodes,
+            layer._inbound_nodes,
         )
         for n in old_nodes:
-            layer.inbound_nodes.remove(n)
+            layer._inbound_nodes.remove(n)
 
 
 def convert_config(
